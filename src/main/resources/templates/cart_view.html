@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ショッピングカート - SpringEC001</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body style="display: block; background-color: #f4f7f6;">
+
+    <div class="cart-container">
+        <h1>🛒 ショッピングカート</h1>
+        
+        <div th:if="${#authentication.principal != 'anonymousUser'}" style="margin-bottom: 20px;">
+            <p>ようこそ、<strong th:text="${#authentication.name}">ユーザー</strong>さん</p>
+        </div>
+
+        <div th:if="${not #lists.isEmpty(cartItems)}">
+            <table class="cart-table">
+                <thead>
+                    <tr>
+                        <th>商品名</th>
+                        <th>単価</th>
+                        <th>数量</th>
+                        <th>小計</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="item : ${cartItems}">
+                        <td th:text="${item.name}" style="font-weight: bold;">商品名</td>
+                        <td th:text="${item.price} + '円'">0円</td>
+                        <td th:text="${item.quantity}">1</td>
+                        <td th:text="${item.price * item.quantity} + '円'">0円</td>
+                        <td>
+                            <form th:action="@{/cart/remove}" method="post" style="display:inline;">
+                                <input type="hidden" name="cartItemId" th:value="${item.id}" />
+                                <button type="submit" class="btn-delete" onclick="return confirm('この商品をカートから削除しますか？')">削除</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="cart-summary">
+                <div>
+                    合計金額: <span class="total-price" th:text="${#aggregates.sum(cartItems.![price * quantity])} + '円'">0円</span>
+                </div>
+                
+                <form th:action="@{/cart/checkout}" method="post">
+                    <button type="submit" class="btn-checkout">注文を確定する</button>
+                </form>
+            </div>
+        </div>
+
+        <div th:if="${#lists.isEmpty(cartItems)}" class="empty-message">
+            <p>カートに商品は入っていません。</p>
+            <a th:href="@{/items}" class="btn-detail" style="display: inline-block; margin-top: 10px;">お買い物を続ける</a>
+        </div>
+
+        <div style="margin-top: 30px; text-align: left;">
+            <a th:href="@{/items}" class="back-link">← 商品一覧に戻る</a>
+        </div>
+    </div>
+
+</body>
+</html>

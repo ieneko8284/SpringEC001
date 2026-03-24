@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>注文履歴 - SpringEC001</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body style="display: block; background-color: #f4f7f6;">
+
+    <div class="container history-container">
+        <h1 style="text-align: center; margin-bottom: 40px;">📦 注文履歴</h1>
+
+        <div th:if="${#lists.isEmpty(orders)}" class="success-container">
+            <p>まだ注文履歴がありません。</p>
+            <a th:href="@{/items}" class="btn-home">お買い物を始める</a>
+        </div>
+
+        <div th:each="order : ${orders}" class="order-card">
+            <div class="order-header">
+                <span class="order-id" th:text="'注文番号: #' + ${order.id}">注文番号: #1</span>
+                <span class="order-date" th:text="${#temporals.format(order.orderDate, 'yyyy/MM/dd HH:mm')}">2026/03/23 14:00</span>
+            </div>
+
+            <ul class="order-item-list">
+                <li th:each="detail : ${order.orderItems}" class="order-item-row">
+                    <span th:text="${detail.itemId}">商品ID</span> <span>
+                        <span th:text="${detail.priceAtOrder} + '円'">0円</span>
+                        ×
+                        <span th:text="${detail.quantity}">1</span>
+                    </span>
+                </li>
+            </ul>
+
+            <div class="order-total-section">
+                <span class="order-total-label">合計金額:</span>
+                <span class="order-total-value" th:text="${order.totalPrice} + '円'">0円</span>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <a th:href="@{/items}" class="back-link">← 商品一覧に戻る</a>
+        </div>
+    </div>
+
+</body>
+</html>>

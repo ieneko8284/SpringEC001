@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>新規会員登録 - SpringEC</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="login-container"> <h2>新規会員登録</h2>
+        
+        <form th:action="@{/register}" th:object="${user}" method="post">
+            <div class="form-group">
+                <label>ユーザー名</label>
+                <input type="text" th:field="*{username}" required placeholder="ユーザー名" />
+            </div>
+            <div class="form-group">
+                <label>メールアドレス</label>
+                <input type="email" th:field="*{email}" required placeholder="example@test.com" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;" />
+            </div>
+            <div class="form-group">
+                <label>パスワード</label>
+                <input type="password" th:field="*{password}" required placeholder="パスワード" />
+            </div>
+            <button type="submit">登録する</button>
+        </form>
+        
+        <a th:href="@{/login}" class="back-link">ログイン画面へ戻る</a>
+    </div>
+</body>
+</html>>

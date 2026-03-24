@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>SpringEC001 - 商品一覧</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body style="display: block; height: auto; background-color: #f4f7f6;"> <div class="container">
+        <h1 style="text-align: center; color: #333;">商品ラインナップ</h1>
+
+        <div class="header-bar" sec:authorize="isAuthenticated()">
+            <span>ようこそ、<strong sec:authentication="name">ユーザー名</strong>さん！</span>
+            <div style="display: flex; gap: 15px; align-items: center;">
+                <a th:href="@{/cart}" style="text-decoration: none; color: #007bff;">🛒 カートを見る</a>
+                <form th:action="@{/logout}" method="post" style="margin: 0;">
+                    <button type="submit" class="btn-logout">ログアウト</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="header-bar" sec:authorize="isAnonymous()">
+            <span>ゲストさん、こんにちは</span>
+            <a th:href="@{/login}" style="text-decoration: none; color: #007bff;">ログイン</a>
+        </div>
+
+        <div class="item-grid">
+            <div class="item-card" th:each="item : ${items}">
+                <div class="item-name" th:text="${item.name}">商品名</div>
+                <div class="item-price" th:text="${item.price} + '円'">0円</div>
+                <div class="item-stock" th:text="'在庫: ' + ${item.stock}">在庫: 0</div>
+                <p th:text="${#strings.abbreviate(item.description, 50)}" style="font-size: 0.9rem; color: #777;">説明文...</p>
+                
+                <a th:href="@{/items/{id}(id=${item.id})}" class="btn-detail">詳細を見る</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

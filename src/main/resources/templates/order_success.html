@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>注文完了 - SpringEC001</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body style="display: block; background-color: #f4f7f6;">
+
+    <div class="success-container">
+        <div class="success-icon">✅</div>
+        
+        <h1 class="success-title">ご注文ありがとうございました！</h1>
+        
+        <div class="success-message">
+            <p>注文処理が正常に完了しました。<br>
+            ご登録のメールアドレスに、注文確認メール（の代わりのログ）を送信しました。</p>
+            <p style="font-style: italic; color: #999;">
+                商品は、心の準備ができ次第、発送いたします。<br>
+                （※現在は開発環境のため、実際に商品は届きません）
+            </p>
+        </div>
+
+        <div style="margin-top: 20px;">
+            <a th:href="@{/items}" class="btn-home">商品一覧へ戻る</a>
+        </div>
+        
+        <div style="margin-top: 20px;">
+            <a th:href="@{/orders/history}" style="color: #007bff; text-decoration: none; font-size: 0.9rem;">
+                注文履歴を確認する
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>

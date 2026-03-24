@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${item.name} + ' - 商品詳細'"></title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body style="display: block; background-color: #f4f7f6;">
+
+    <div class="container">
+        <p th:if="${errorMessage}" th:text="${errorMessage}" style="color: red; text-align: center; font-weight: bold;"></p>
+
+        <div class="detail-container">
+            <div style="flex: 0 0 300px; background: #eee; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
+                <span style="color: #aaa;">No Image</span>
+            </div>
+
+            <div class="detail-info">
+                <h1 class="detail-name" th:text="${item.name}">商品名</h1>
+                <div class="detail-price" th:text="${item.price} + '円'">0円</div>
+                <div class="detail-stock" th:text="'在庫：' + ${item.stock} + '点'">在庫：0点</div>
+
+                <div class="detail-description">
+                    <strong>商品説明</strong>
+                    <p th:text="${item.description}">ここに説明文が入ります。</p>
+                </div>
+
+                <form th:action="@{/cart/add}" method="post" class="cart-form">
+                    <input type="hidden" name="itemId" th:value="${item.id}">
+                    <label>数量：</label>
+                    <input type="number" name="quantity" class="quantity-input" value="1" min="1" th:max="${item.stock}">
+                    <button type="submit" class="btn-add-cart">カートに入れる</button>
+                </form>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <a th:href="@{/items}" class="back-link">← 一覧に戻る</a>
+        </div>
+    </div>
+
+</body>
+</html>
